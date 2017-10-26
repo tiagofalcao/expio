@@ -2,7 +2,7 @@
 #include <unistd.h>
 
 int main() {
-  const static char *file = "/tmp/expio_stats_unittest.tsv";
+  static const char *file = "/tmp/expio_stats_unittest.tsv";
   expio_stats_t *stats =
       expio_stats_tsv_new(file, "unittest", "write", "VERSION", "tsv", "", 3);
 
@@ -12,8 +12,7 @@ int main() {
   sleep(1);
   expio_stats_end(stats);
 
-  if (!expio_stats_write(stats))
-    return 1;
+  if (!expio_stats_write(stats)) { return 1; }
 
   expio_stats_delete(stats);
 

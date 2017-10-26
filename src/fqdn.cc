@@ -1,19 +1,21 @@
 #include "expio.h"
 
+#include <cstring>
 #include <netdb.h>
-#include <string.h>
 #include <unistd.h>
 #define FQDN_SIZE 256
 
 char hostname[FQDN_SIZE] = "\0";
 
 const char *expio_fqdn_get() {
-  if (hostname[0])
-    return hostname;
+  if (hostname[0] != '\0') {
+    return static_cast<char *>(hostname);
+  }
 
   gethostname(hostname, FQDN_SIZE - 1);
-  if (hostname[0])
+  if (hostname[0] != '\0') {
     return hostname;
+  }
 
   struct addrinfo hints, *info, *p;
   int gai_result;
@@ -25,11 +27,11 @@ const char *expio_fqdn_get() {
 
   if ((gai_result = getaddrinfo(hostname, "http", &hints, &info)) != 0) {
     EXPIO_LOG_ERR("getaddrinfo: %s\n", gai_strerror(gai_result));
-    return NULL;
+    return nullptr;
   }
 
-  for (p = info; p != NULL; p = p->ai_next) {
-    if (p->ai_flags & AI_CANONNAME) {
+  for (p = info; p != nullptr; p = p->ai_next) {
+    if ((p->ai_flags & AI_CANONNAME) != 0) {
       strncpy(hostname, p->ai_canonname, FQDN_SIZE - 1);
       hostname[FQDN_SIZE - 1] = '\0';
       break;

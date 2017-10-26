@@ -115,8 +115,15 @@ expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
                                    const char *instance, const char *version,
                                    const char *target, const char *description,
                                    uint32_t repetitions) {
+  (void) file;
+  (void) experiment;
+  (void) instance;
+  (void) version;
+  (void) target;
+  (void) description;
+  (void) repetitions;
   EXPIO_LOG_ERR("SQLite3 is not supported in this build\n");
-  return NULL;
+  return nullptr;
 }
 
 #endif

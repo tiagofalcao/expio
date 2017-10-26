@@ -1,6 +1,6 @@
 #include "expio.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/file.h>
 #include <unistd.h>
 

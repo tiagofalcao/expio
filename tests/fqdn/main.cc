@@ -1,5 +1,5 @@
 #include "expio.h"
-#include <stdio.h>
+#include <cstdio>
 
 int main() {
   printf("%s\n", expio_fqdn_get());

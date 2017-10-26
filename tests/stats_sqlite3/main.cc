@@ -3,7 +3,7 @@
 
 int main() {
 #ifdef HAVE_SQLITE3
-  const static char *file = "/tmp/expio_stats_unittest.sqlite3";
+  static const char *file = "/tmp/expio_stats_unittest.sqlite3";
   expio_stats_t *stats = expio_stats_sqlite3_new(file, "unittest", "write",
                                              "VERSION", "sqlite3", "", 3);
 
@@ -13,8 +13,7 @@ int main() {
   sleep(1);
   expio_stats_end(stats);
 
-  if (!expio_stats_write(stats))
-    return 1;
+  if (!expio_stats_write(stats)) { return 1; }
 
   expio_stats_delete(stats);
 #endif

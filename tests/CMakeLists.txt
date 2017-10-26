@@ -1,0 +1,5 @@
+add_subdirectory(fqdn)
+add_subdirectory(log)
+add_subdirectory(stats)
+add_subdirectory(stats_tsv)
+add_subdirectory(stats_sqlite3)

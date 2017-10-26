@@ -1,6 +1,6 @@
 #include "expio.h"
 
-#include <string.h>
+#include <cstring>
 
 double getfrequency() {
   uint64_t begints, begints2, endts;
@@ -9,8 +9,9 @@ double getfrequency() {
   begints2 = expio_timestamp();
 
   begin = expio_cycles();
-  for (uint64_t i = 0; i < 100000; i++)
+  for (uint64_t i = 0; i < 100000; i++) {
     __asm__ __volatile__("");
+  }
   end = expio_cycles();
 
   endts = expio_timestamp();
@@ -19,7 +20,7 @@ double getfrequency() {
 
   uint64_t nsecElapsed = endts - begints2 - begints2 + begints;
 
-  return (((double)end) / nsecElapsed);
+  return ((static_cast<double>(end)) / nsecElapsed);
 }
 
 void expio_stats_default_begin(expio_stats_t *stats) {
@@ -55,7 +56,7 @@ void expio_stats_default_destructor(expio_stats_t **stats) {
   FREE_STR(file);
 
   free(*stats);
-  *stats = NULL;
+  *stats = nullptr;
 }
 
 expio_stats_t *expio_stats_new(const char *experiment, const char *instance,
@@ -63,7 +64,7 @@ expio_stats_t *expio_stats_new(const char *experiment, const char *instance,
                            const char *description, uint32_t repetitions) {
   expio_stats_t *stats;
 
-  stats = (expio_stats_t *)malloc(sizeof(expio_stats_t));
+  stats = static_cast<expio_stats_t *>(malloc(sizeof(expio_stats_t)));
   stats->timestamp = expio_timestamp();
   stats->fqdn = expio_fqdn_get();
   stats->experiment = strdup(experiment);
@@ -71,7 +72,7 @@ expio_stats_t *expio_stats_new(const char *experiment, const char *instance,
   stats->version = strdup(version);
   stats->target = strdup(target);
   stats->description = strdup(description);
-  stats->file = NULL;
+  stats->file = nullptr;
   stats->repetitions = repetitions;
 
   stats->begin = &expio_stats_default_begin;

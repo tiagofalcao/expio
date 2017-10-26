@@ -19,7 +19,7 @@ int main() {
   // EXPIO_LOG_CRIT("This is a critical message, bye!");
   // EXPIO_LOG(-99, "This is a critical message, bye!");
 
-  expio_log_level_global_set((EXPIO_Log_Level)20);
+  expio_log_level_global_set(static_cast<EXPIO_Log_Level>(20));
   EXPIO_LOG(20, "Verbose!!");
   EXPIO_LOG_DBG("This is only a debug message, very verbose.");
   EXPIO_LOG_INFO("This is only a informative message, verbose.");

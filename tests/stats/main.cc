@@ -11,8 +11,7 @@ int main() {
   sleep(1);
   expio_stats_end(stats);
 
-  if (!expio_stats_write(stats))
-    return 1;
+  if (!expio_stats_write(stats)) { return 1; }
 
   expio_stats_delete(stats);
 

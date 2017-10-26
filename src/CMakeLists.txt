@@ -1,0 +1,26 @@
+file(GLOB SOURCES "*.cc")
+file(GLOB TESTS "*_test.cc")
+list(REMOVE_ITEM SOURCES ${TESTS})
+
+add_library("${CMAKE_PROJECT_NAME}" SHARED ${SOURCES})
+target_include_directories ("${CMAKE_PROJECT_NAME}" PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+install(TARGETS "${CMAKE_PROJECT_NAME}" LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+add_library("${CMAKE_PROJECT_NAME}_static" STATIC ${SOURCES})
+target_include_directories ("${CMAKE_PROJECT_NAME}_static" PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties("${CMAKE_PROJECT_NAME}_static" PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}")
+install(TARGETS "${CMAKE_PROJECT_NAME}_static" ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+file(GLOB HEADERS "*.h")
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/pc.in"
+	"${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+set(TEST "unittests")
+add_executable(${TEST} ${TESTS})
+target_link_libraries(${TEST} "${CMAKE_PROJECT_NAME}" ${GTEST_BOTH_LIBRARIES} Threads::Threads)
+target_include_directories(${TEST} SYSTEM PRIVATE ${GTEST_INCLUDE_DIRS})
+gtest_add_tests(TARGET ${TEST} TEST_LIST ${TEST}_tests)
+set_tests_properties(${${TEST}_tests} PROPERTIES TIMEOUT 1)

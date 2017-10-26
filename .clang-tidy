@@ -1,0 +1,28 @@
+Checks: "-*,\
+clang-diagnostic-*,\
+clang-analyzer-*,\
+google-*,\
+mpi-*,\
+performance-*,\
+readability-*,\
+modernize-*,\
+-modernize-use-equals-default,\
+-modernize-use-equals-delete,\
+bugprone-*,\
+llvm-*,\
+misc-*,\
+-misc-argument-comment,\
+-misc-uniqueptr-reset-release,\
+-misc-unused-parameters,\
+-misc-unused-raii"
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle:     google
+CheckOptions:
+  - key:             google-runtime-references.WhiteListTypes
+    value:           'benchmark::State'
+  - key:             modernize-pass-by-value.IncludeStyle
+    value:           google
+  - key:             modernize-replace-auto-ptr.IncludeStyle
+    value:           google
