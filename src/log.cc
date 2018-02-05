@@ -20,14 +20,16 @@ static inline bool _expio_log_term_color_supported(const char *term) {
   const char *tail;
   size_t len;
 
-  if (term == nullptr) { return false; }
+  if (term == nullptr) {
+    return false;
+  }
 
   len = strlen(term);
   tail = term + 1;
   switch (term[0]) {
-  /* list of known to support color terminals,
-   * take from gentoo's portage.
-   */
+    /* list of known to support color terminals,
+     * take from gentoo's portage.
+     */
 
   case 'x': /* xterm and xterm-(256)color */
     return ((strncmp(tail, "term", sizeof("term") - 1) == 0) &&
@@ -68,7 +70,6 @@ bool expio_log_init(void) {
   if ((tmp = getenv("EXPIO_LOG_COLOR")) != nullptr) {
     _expio_log_color_enable = atoi(tmp) > 0;
   }
-
 #ifndef _WIN32
   /* color was not explicitly disabled or enabled, guess it */
   else if (_expio_log_color_enable) {
@@ -134,8 +135,8 @@ static inline void _expio_log_print_prefix(FILE *fp, EXPIO_Log_Level level,
       fprintf(fp,
               "%010" PRIX64 " %10lu\t%s%s" EXPIO_LOG_COLOR_RESET
               ": %s:%d " EXPIO_LOG_COLOR_HIGH "%s()" EXPIO_LOG_COLOR_RESET " ",
-              timestamp - rtdsc_init, thread, _colors[level],
-              _names[level], file, line, fnc);
+              timestamp - rtdsc_init, thread, _colors[level], _names[level],
+              file, line, fnc);
     }
   } else {
     if (EXPIO_LOG_LIKELY(pthread_equal(thread, main_thread))) {
@@ -143,8 +144,7 @@ static inline void _expio_log_print_prefix(FILE *fp, EXPIO_Log_Level level,
               _names[level], file, line, fnc);
     } else {
       fprintf(fp, "%010" PRIX64 " %10lu\t%s: %s:%d %s() ",
-              timestamp - rtdsc_init, thread, _names[level], file,
-              line, fnc);
+              timestamp - rtdsc_init, thread, _names[level], file, line, fnc);
     }
   }
 }
@@ -164,7 +164,9 @@ static inline void _expio_log_print_unlocked(EXPIO_Log_Level level,
                                              const char *file, const char *fnc,
                                              int line, const char *fmt,
                                              va_list args) {
-  if (level > _expio_log_level) { return; }
+  if (level > _expio_log_level) {
+    return;
+  }
 
   _expio_log_print_cb_stderr(level, file, fnc, line, fmt, nullptr, args);
 }

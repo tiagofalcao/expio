@@ -28,18 +28,19 @@ typedef struct _expio_stats {
 } expio_stats_t;
 
 expio_stats_t *expio_stats_new(const char *experiment, const char *instance,
-                           const char *version, const char *target,
-                           const char *description, uint32_t repetitions);
+                               const char *version, const char *target,
+                               const char *description, uint32_t repetitions);
 
 expio_stats_t *expio_stats_tsv_new(const char *file, const char *experiment,
-                               const char *instance, const char *version,
-                               const char *target, const char *description,
-                               uint32_t repetitions);
-
-expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
                                    const char *instance, const char *version,
                                    const char *target, const char *description,
                                    uint32_t repetitions);
+
+expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
+                                       const char *instance,
+                                       const char *version, const char *target,
+                                       const char *description,
+                                       uint32_t repetitions);
 
 #define expio_stats_begin(STATS) (*(STATS->begin))(STATS)
 #define expio_stats_end(STATS) (*(STATS->end))(STATS)

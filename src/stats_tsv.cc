@@ -6,8 +6,9 @@
 
 bool expio_stats_tsv_write(expio_stats_t *stats) {
   char line[256];
-  snprintf(line, 256, "%" PRIu64 "\t%s\t%s\t%s\t%s\t%s\t%s\t%" PRIu32
-                      "\t%" PRIu64 "\t%" PRIu64 "\t%f\n",
+  snprintf(line, 256,
+           "%" PRIu64 "\t%s\t%s\t%s\t%s\t%s\t%s\t%" PRIu32 "\t%" PRIu64
+           "\t%" PRIu64 "\t%f\n",
            stats->timestamp, stats->fqdn, stats->experiment, stats->instance,
            stats->version, stats->target, stats->description,
            stats->repetitions, stats->end_time_ns - stats->begin_time_ns,
@@ -32,11 +33,11 @@ bool expio_stats_tsv_write(expio_stats_t *stats) {
 }
 
 expio_stats_t *expio_stats_tsv_new(const char *file, const char *experiment,
-                               const char *instance, const char *version,
-                               const char *target, const char *description,
-                               uint32_t repetitions) {
+                                   const char *instance, const char *version,
+                                   const char *target, const char *description,
+                                   uint32_t repetitions) {
   expio_stats_t *stats = expio_stats_new(experiment, instance, version, target,
-                                     description, repetitions);
+                                         description, repetitions);
   stats->write = &expio_stats_tsv_write;
   stats->file = strdup(file);
   return stats;

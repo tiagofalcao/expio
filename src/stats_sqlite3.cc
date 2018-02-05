@@ -10,7 +10,8 @@ bool expio_stats_sqlite3_write(expio_stats_t *stats) {
   {
     int rc = sqlite3_open(stats->file, &db);
     if (rc != SQLITE_OK) {
-      EXPIO_LOG_ERR("Can't open database %s: %s\n", stats->file, sqlite3_errmsg(db));
+      EXPIO_LOG_ERR("Can't open database %s: %s\n", stats->file,
+                    sqlite3_errmsg(db));
       sqlite3_close(db);
       return false;
     }
@@ -99,11 +100,12 @@ bool expio_stats_sqlite3_write(expio_stats_t *stats) {
 }
 
 expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
-                                   const char *instance, const char *version,
-                                   const char *target, const char *description,
-                                   uint32_t repetitions) {
+                                       const char *instance,
+                                       const char *version, const char *target,
+                                       const char *description,
+                                       uint32_t repetitions) {
   expio_stats_t *stats = expio_stats_new(experiment, instance, version, target,
-                                     description, repetitions);
+                                         description, repetitions);
   stats->write = &expio_stats_sqlite3_write;
   stats->file = strdup(file);
   return stats;
@@ -112,16 +114,17 @@ expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
 #else
 
 expio_stats_t *expio_stats_sqlite3_new(const char *file, const char *experiment,
-                                   const char *instance, const char *version,
-                                   const char *target, const char *description,
-                                   uint32_t repetitions) {
-  (void) file;
-  (void) experiment;
-  (void) instance;
-  (void) version;
-  (void) target;
-  (void) description;
-  (void) repetitions;
+                                       const char *instance,
+                                       const char *version, const char *target,
+                                       const char *description,
+                                       uint32_t repetitions) {
+  (void)file;
+  (void)experiment;
+  (void)instance;
+  (void)version;
+  (void)target;
+  (void)description;
+  (void)repetitions;
   EXPIO_LOG_ERR("SQLite3 is not supported in this build\n");
   return nullptr;
 }

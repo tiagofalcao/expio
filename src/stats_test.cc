@@ -1,5 +1,3 @@
 #include "gtest/gtest.h"
 
-TEST(DummyTest, Dummy) {
-
-}
+TEST(DummyTest, Dummy) {}

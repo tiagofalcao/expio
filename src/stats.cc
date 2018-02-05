@@ -60,8 +60,8 @@ void expio_stats_default_destructor(expio_stats_t **stats) {
 }
 
 expio_stats_t *expio_stats_new(const char *experiment, const char *instance,
-                           const char *version, const char *target,
-                           const char *description, uint32_t repetitions) {
+                               const char *version, const char *target,
+                               const char *description, uint32_t repetitions) {
   expio_stats_t *stats;
 
   stats = static_cast<expio_stats_t *>(malloc(sizeof(expio_stats_t)));

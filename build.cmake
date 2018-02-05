@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
+execute_process (COMMAND ${CMAKE_CURRENT_LIST_DIR}/utils/install_hooks.sh)
 set(build_dir ${CMAKE_CURRENT_LIST_DIR}/build)
 
 if(NOT EXISTS ${build_dir})
